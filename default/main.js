@@ -10,11 +10,11 @@ module.exports.loop = function () {
     let desiredPopulation = {
         attackers: {
             amount: 4,
-            body: [TOUGH,TOUGH,TOUGH,TOUGH,MOVE,MOVE,ATTACK,ATTACK,RANGED_ATTACK]
+            body: [TOUGH,TOUGH,TOUGH,TOUGH,MOVE,MOVE,ATTACK,ATTACK]
         },
         harvesters: {
             amount: 5,
-            body: [WORK,CARRY,CARRY,MOVE]
+            body: [WORK,CARRY,CARRY,CARRY,MOVE]
         },
 		miners: {
 			// Spawn the same amount of miners as there are containers
@@ -23,13 +23,13 @@ module.exports.loop = function () {
 		},
         upgraders: {
             amount: 6,
-            body: [WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE]
+            body: [WORK,WORK,CARRY,MOVE]
         },
         builders: {
 			// Spawn builders only when there are construction sites
 			// Make amount based on the amount of construction needed
             amount: utility.getNumBuildersBasedOnConstruction(Game.spawns.Spawn1.room),
-            body: [WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE]
+            body: [WORK,WORK,CARRY,MOVE]
         }
     };
 
@@ -65,8 +65,6 @@ module.exports.loop = function () {
 	};
 
     // Report on numbers of creeps
-	// TODO make this dynamic based on types in desiredPopulation
-	// similar to for in loop below
 	let totalNumCreeps = 0;
 	let totalDesiredCreeps = 0;
 	for (let type in desiredPopulation) {
@@ -76,7 +74,7 @@ module.exports.loop = function () {
 	}
 	console.log('Total # of creeps:', totalNumCreeps, 'of', totalDesiredCreeps);
 
-
+	// Spawn creeps
 	for (let type in desiredPopulation) {
 		if (myCreeps[type].length < desiredPopulation[type].amount) {
 			let spawn = Game.spawns['Spawn1'];

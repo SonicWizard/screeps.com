@@ -35,14 +35,14 @@ var roleHarvester = {
 				}
 			});
 
-			// make harvesters deliver to towers firsts, then spawns, then extensions
-			if (towers.length > 0) {
-				let nearest = utility.findNearest(creep, towers);
+			// make harvesters to spawns first, then towers, then extensions
+			if (spawns.length > 0) {
+				let nearest = utility.findNearest(creep, spawns);
 				if (creep.transfer(nearest, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
 					creep.moveTo(nearest);
 				}
-			} else if (spawns.length > 0) {
-				let nearest = utility.findNearest(creep, spawns);
+			} else if (towers.length > 0) {
+				let nearest = utility.findNearest(creep, towers);
 				if (creep.transfer(nearest, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
 					creep.moveTo(nearest);
 				}
