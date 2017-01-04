@@ -2,7 +2,8 @@ var utility = require('utility');
 
 var roleMiner = {
 	run: function(creep) {
-		var containers = creep.room.find(FIND_STRUCTURES, {
+		// find available containers to fill
+		let containers = creep.room.find(FIND_STRUCTURES, {
 			filter: (structure) => {
 				return (structure.structureType == STRUCTURE_CONTAINER) &&
 					(structure.store[RESOURCE_ENERGY] < structure.storeCapacity) &&
@@ -13,6 +14,7 @@ var roleMiner = {
 		});
 
 		if (containers.length > 0) {
+			// find the nearest container and start mining
 			let nearestContainer = utility.findNearest(creep, containers);
 			if (creep.pos.getRangeTo(nearestContainer) == 0) {
 				var source = creep.pos.findClosestByPath(FIND_SOURCES);

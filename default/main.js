@@ -3,6 +3,7 @@ var roleHarvester = require('role.harvester');
 var roleMiner = require('role.miner');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
+var structureTower = require('structure.tower');
 
 module.exports.loop = function () {
     let desiredPopulation = {
@@ -47,21 +48,11 @@ module.exports.loop = function () {
         }
     }
 
-	// Tower
-	// TODO Change this to the new id once my new tower is built
+	// Activate tower(s)
+	// TODO Pull in id(s) dynamically. Get reference to all towers and iterate through them
     let tower = Game.getObjectById('586a1970cde6988147bdf2c4');
     if (tower) {
-        let closestHostile = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
-        if (closestHostile) {
-            tower.attack(closestHostile);
-        } else {
-			let closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {
-				filter: (structure) => structure.hits < structure.hitsMax
-			});
-			if (closestDamagedStructure) {
-				tower.repair(closestDamagedStructure);
-			}
-		}
+		structureTower.defendAndProtect(tower);
     }
 
 
