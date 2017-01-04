@@ -4,6 +4,7 @@ var roleMiner = require('role.miner');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
 var structureTower = require('structure.tower');
+var utility = require('utility');
 
 module.exports.loop = function () {
     let desiredPopulation = {
@@ -17,23 +18,16 @@ module.exports.loop = function () {
         },
 		miners: {
 			// Build the same amount of miners as there are containers
-			/*
-			amount: creep.room.find(FIND_STRUCTURES, {
-				filter: (structure) => {
-					return (structure.structureType == STRUCTURE_CONTAINER)
-				}
-			}).length,
-			*/
-			amount: 5,
+			amount: utility.getNumContainers(Game.spawns.Spawn1.room),
 			body: [WORK,WORK,MOVE]
 		},
         upgraders: {
             amount: 6,
-            body: [WORK,WORK,CARRY,CARRY,MOVE]
+            body: [WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE]
         },
         builders: {
             amount: 5,
-            body: [WORK,WORK,CARRY,CARRY,MOVE]
+            body: [WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE]
         }
     };
 
@@ -48,13 +42,14 @@ module.exports.loop = function () {
         }
     }
 
-	// Activate tower(s)
-	// TODO Pull in id(s) dynamically. Get reference to all towers and iterate through them
-    let tower = Game.getObjectById('586a1970cde6988147bdf2c4');
-    if (tower) {
-		structureTower.defendAndProtect(tower);
-    }
-
+	// Activate towers
+	 var towers = Game.spawns.Spawn1.room.find(FIND_MY_STRUCTURES, {
+		 filter: { structureType: STRUCTURE_TOWER }
+	 });
+	 console.log('Spawn has ' + towers.length + ' towers available');
+	 towers.forEach(function (tower) {
+		 structureTower.defendAndProtect(tower);
+	 });
 
     // Creeps
 	let myCreeps = {

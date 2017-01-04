@@ -44,6 +44,12 @@ var utility = {
 		if (creep.withdraw(closestContainer, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
 			creep.moveTo(closestContainer);
 		}
+	},
+	getNumContainers: (room) => {
+		var containers = room.find(FIND_STRUCTURES, {
+			filter: { structureType: STRUCTURE_CONTAINER }
+		});
+		return containers.length;
 	}
 };
 
