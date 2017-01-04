@@ -26,7 +26,7 @@ let structureTower = {
 
 			if (damagedStructures) {
 				let mostDamagedStructure = damagedStructures[0];
-				console.log('The most damaged structure is', mostDamagedStructure, 'with', mostDamagedStructure.hitsMax, 'maxHits and', mostDamagedStructure.hits, 'hits:', ((mostDamagedStructure.hitsMax - mostDamagedStructure.hits) / mostDamagedStructure.hitsMax * 100).toFixed(2) + '% structural loss');
+				console.log('The most damaged structure is', mostDamagedStructure, 'with', mostDamagedStructure.hitsMax, 'maxHits and', mostDamagedStructure.hits, 'hits:', ((mostDamagedStructure.hitsMax - mostDamagedStructure.hits) / mostDamagedStructure.hitsMax * 100).toFixed(3) + '% structural loss');
 				tower.repair(mostDamagedStructure);
 			}
 

@@ -62,7 +62,12 @@ var utility = {
 
 		let remainingProgress = progressTotal - progress;
 		let numBuilders = Math.round(remainingProgress / 1000);
+
+		// have at least one builder, even if there's little to no need for construction
+		numBuilders = (numBuilders > 0) ? numBuilders = numBuilders : numBuilders = 1;
+
 		console.log('construction need is', progressTotal, 'and remaining progress is', remainingProgress, 'so number of builders will be', numBuilders);
+
 		return numBuilders;
 	}
 };

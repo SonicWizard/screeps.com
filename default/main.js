@@ -48,7 +48,7 @@ module.exports.loop = function () {
 	 var towers = Game.spawns.Spawn1.room.find(FIND_MY_STRUCTURES, {
 		 filter: { structureType: STRUCTURE_TOWER }
 	 });
-	 console.log('Spawn has ' + towers.length + ' towers available');
+	 console.log('Room has ' + towers.length + ' tower(s) available');
 	 towers.forEach(function (tower) {
 		 structureTower.defendAndProtect(tower);
 	 });
