@@ -54,12 +54,15 @@ var utility = {
 	getNumBuildersBasedOnConstruction: (room) => {
 		let constructionSites = room.find(FIND_CONSTRUCTION_SITES);
 		let progressTotal = 0;
+		let progress = 0;
 		constructionSites.forEach((site) => {
 			progressTotal += site.progressTotal;
+			progress += site.progress;
 		});
 
-		let numBuilders = Math.round(progressTotal / 1000);
-		console.log('construction need is', progressTotal, 'so number of builders will be', numBuilders);
+		let remainingProgress = progressTotal - progress;
+		let numBuilders = Math.round(remainingProgress / 1000);
+		console.log('construction need is', progressTotal, 'and remaining progress is', remainingProgress, 'so number of builders will be', numBuilders);
 		return numBuilders;
 	}
 };
