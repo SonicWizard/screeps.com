@@ -50,6 +50,17 @@ var utility = {
 			filter: { structureType: STRUCTURE_CONTAINER }
 		});
 		return containers.length;
+	},
+	getNumBuildersBasedOnConstruction: (room) => {
+		let constructionSites = room.find(FIND_CONSTRUCTION_SITES);
+		let progressTotal = 0;
+		constructionSites.forEach((site) => {
+			progressTotal += site.progressTotal;
+		});
+
+		let numBuilders = Math.round(progressTotal / 1000);
+		console.log('construction need is', progressTotal, 'so number of builders will be', numBuilders);
+		return numBuilders;
 	}
 };
 

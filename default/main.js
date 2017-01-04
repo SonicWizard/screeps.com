@@ -10,14 +10,14 @@ module.exports.loop = function () {
     let desiredPopulation = {
         attackers: {
             amount: 4,
-            body: [TOUGH,TOUGH,TOUGH,TOUGH,MOVE,MOVE,ATTACK,ATTACK]
+            body: [TOUGH,TOUGH,TOUGH,TOUGH,MOVE,MOVE,ATTACK,ATTACK,RANGED_ATTACK]
         },
         harvesters: {
             amount: 5,
             body: [WORK,CARRY,CARRY,MOVE]
         },
 		miners: {
-			// Build the same amount of miners as there are containers
+			// Spawn the same amount of miners as there are containers
 			amount: utility.getNumContainers(Game.spawns.Spawn1.room),
 			body: [WORK,WORK,MOVE]
 		},
@@ -26,7 +26,9 @@ module.exports.loop = function () {
             body: [WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE]
         },
         builders: {
-            amount: 5,
+			// Spawn builders only when there are construction sites
+			// Make amount based on the amount of construction needed
+            amount: utility.getNumBuildersBasedOnConstruction(Game.spawns.Spawn1.room),
             body: [WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE]
         }
     };
