@@ -7,31 +7,46 @@ var structureTower = require('structure.tower');
 var utility = require('utility');
 
 module.exports.loop = function () {
-    let desiredPopulation = {
-        attackers: {
-            amount: 4,
-            body: [TOUGH,TOUGH,TOUGH,TOUGH,MOVE,MOVE,ATTACK,ATTACK]
-        },
-        harvesters: {
-            amount: 5,
-            body: [WORK,CARRY,CARRY,CARRY,MOVE]
-        },
-		miners: {
+	let desiredPopulation = {
+		attacker: {
+			amount: 4,
+			body: [TOUGH,TOUGH,TOUGH,TOUGH,MOVE,MOVE,ATTACK,ATTACK],
+			script: roleAttacker
+		},
+		harvester: {
+			amount: 5,
+			body: [WORK,CARRY,CARRY,CARRY,MOVE],
+			script: roleHarvester
+		},
+		bigHarvester: {
+			amount: 0,
+			body: [WORK,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE],
+			script: roleHarvester
+		},
+		miner: {
 			// Spawn the same amount of miners as there are containers
 			amount: utility.getNumContainers(Game.spawns.Spawn1.room),
-			body: [WORK,WORK,MOVE]
+			body: [WORK,WORK,MOVE],
+			script: roleMiner
 		},
-        upgraders: {
-            amount: 6,
-            body: [WORK,WORK,CARRY,MOVE]
-        },
-        builders: {
+		upgrader: {
+			amount: 5,
+			body: [WORK,WORK,CARRY,MOVE],
+			script: roleUpgrader
+		},
+		bigUpgrader: {
+			amount: 1,
+			body: [WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE],
+			script: roleUpgrader
+		},
+		builder: {
 			// Spawn builders only when there are construction sites
 			// Make amount based on the amount of construction needed
-            amount: utility.getNumBuildersBasedOnConstruction(Game.spawns.Spawn1.room),
-            body: [WORK,WORK,CARRY,MOVE]
-        }
-    };
+			amount: utility.getNumBuildersBasedOnConstruction(Game.spawns.Spawn1.room),
+			body: [WORK,WORK,CARRY,MOVE],
+			script: roleBuilder
+		}
+	};
 
     for (var name in Game.rooms) {
         console.log('Room "' + name + '" has ' + Game.rooms[name].energyAvailable + ' energy');
@@ -53,22 +68,25 @@ module.exports.loop = function () {
 		 structureTower.defendAndProtect(tower);
 	 });
 
+	 // Containers
+	 var containersWithEnergy = Game.spawns.Spawn1.room.find(FIND_STRUCTURES, {
+		 filter: (i) => i.structureType == STRUCTURE_CONTAINER
+	 });
+	 containersWithEnergy.forEach((container) => {
+		 console.log(container, 'has', container.store[RESOURCE_ENERGY], 'energy of', container.storeCapacity);
+	 });
+
     // Creeps
-	let myCreeps = {
-		attackers: _.filter(Game.creeps, (creep) => creep.memory.role == 'attacker'),
-		harvesters: _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester'),
-		miners: _.filter(Game.creeps, (creep) => creep.memory.role == 'miner'),
-		upgraders: _.filter(Game.creeps, (creep) => {
-			return creep.memory.role == 'upgrader';
-		}),
-		builders: _.filter(Game.creeps, (creep) => creep.memory.role == 'builder')
-	};
+	let myCreeps = {};
+	for (let type in desiredPopulation) {
+		myCreeps[type] = _.filter(Game.creeps, (creep) => creep.memory.role == type);
+	}
 
     // Report on numbers of creeps
 	let totalNumCreeps = 0;
 	let totalDesiredCreeps = 0;
 	for (let type in desiredPopulation) {
-        console.log(type + ': ' + myCreeps[type].length + ' of ' + desiredPopulation[type].amount);
+        console.log(type + 's: ' + myCreeps[type].length + ' of ' + desiredPopulation[type].amount);
         totalNumCreeps += myCreeps[type].length;
         totalDesiredCreeps += desiredPopulation[type].amount;
 	}
@@ -80,10 +98,9 @@ module.exports.loop = function () {
 			let spawn = Game.spawns['Spawn1'];
 			let body = desiredPopulation[type].body;
 			if (spawn.canCreateCreep(body) == OK) {
-				let role = type.substring(0, type.length -1);
 				// TODO if role is builder, but there's nothing to build, then 'continue' to let someone else spawn
-				let creepName = spawn.createCreep(body, undefined, {role: role});
-				console.log('Spawning new ' + role + ':', creepName);
+				let creepName = spawn.createCreep(body, undefined, {role: type});
+				console.log('Spawning new ' + type + ':', creepName);
 				break;
 			}
 		}
@@ -92,20 +109,6 @@ module.exports.loop = function () {
 	// run the creeps
 	for (var name in Game.creeps) {
 		var creep = Game.creeps[name];
-		if (creep.memory.role == 'attacker') {
-			roleAttacker.run(creep);
-		}
-		if (creep.memory.role == 'harvester') {
-			roleHarvester.run(creep);
-		}
-		if (creep.memory.role == 'miner') {
-			roleMiner.run(creep);
-		}
-		if (creep.memory.role == 'upgrader') {
-			roleUpgrader.run(creep);
-		}
-		if (creep.memory.role == 'builder') {
-			roleBuilder.run(creep);
-		}
+		desiredPopulation[creep.memory.role].script.run(creep);
 	}
 }
