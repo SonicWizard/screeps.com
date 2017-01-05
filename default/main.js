@@ -47,7 +47,7 @@ module.exports.loop = function () {
 			script: roleHarvester
 		},
 		bigUpgrader: {
-			amount: 1,
+			amount: 4,
 			body: [WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE],
 			script: roleUpgrader
 		}

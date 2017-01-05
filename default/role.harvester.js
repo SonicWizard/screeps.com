@@ -62,7 +62,7 @@ var roleHarvester = {
 				}
 			} else {
 				if (this.collecting) {
-					utility.withdrawFromClosestContainer(creep);
+					utility.withdrawFromFullestContainer(creep);
 				} else {
 					utility.harvestFromClosestSource(creep);
 				}

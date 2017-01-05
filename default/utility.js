@@ -45,6 +45,29 @@ var utility = {
 			creep.moveTo(closestContainer);
 		}
 	},
+	withdrawFromFullestContainer: (creep) => {
+		let containers = creep.room.find(FIND_STRUCTURES, {
+			filter: (structure) => {
+				return (structure.structureType == STRUCTURE_CONTAINER) && (structure.store[RESOURCE_ENERGY] > 0);
+			}
+		});
+
+		let sortedContainers = containers.sort((a, b) => {
+			if (a.store[RESOURCE_ENERGY] > b.store[RESOURCE_ENERGY]) {
+				return -1;
+			}
+			if (a.store[RESOURCE_ENERGY] < b.store[RESOURCE_ENERGY]) {
+				return 1;
+			}
+			return 0;
+		});
+
+		let fullestContainer = sortedContainers[0];
+
+		if (creep.withdraw(fullestContainer, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+			creep.moveTo(fullestContainer);
+		}
+	},
 	getNumContainers: (room) => {
 		var containers = room.find(FIND_STRUCTURES, {
 			filter: { structureType: STRUCTURE_CONTAINER }

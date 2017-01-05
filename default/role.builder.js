@@ -33,7 +33,7 @@ var roleBuilder = {
 	    }
 	    else {
 			if (this.collecting) {
-				utility.withdrawFromClosestContainer(creep);
+				utility.withdrawFromFullestContainer(creep);
 			} else {
 				utility.harvestFromClosestSource(creep);
 			}
