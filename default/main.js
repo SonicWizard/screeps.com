@@ -1,4 +1,5 @@
 var roleAttacker = require('role.attacker');
+var roleHealer = require('role.healer');
 var roleHarvester = require('role.harvester');
 var roleMiner = require('role.miner');
 var roleUpgrader = require('role.upgrader');
@@ -23,6 +24,11 @@ module.exports.loop = function () {
 			amount: 4,
 			body: [TOUGH,TOUGH,TOUGH,TOUGH,MOVE,MOVE,ATTACK,ATTACK],
 			script: roleAttacker
+		},
+		healer: {
+			amount: 2,
+			body: [HEAL,MOVE],
+			script: roleHealer
 		},
 		upgrader: {
 			amount: 5,

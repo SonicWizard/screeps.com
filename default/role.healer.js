@@ -1,14 +1,20 @@
-/*
- * Module code goes here. Use 'module.exports' to export things:
- * module.exports.thing = 'a thing';
- *
- * You can import it from another modules like this:
- * var mod = require('role.healers');
- * mod.thing == 'a thing'; // true
- */
+var utility = require('utility');
 
-module.exports = {
-    run: function() {
-        console.log('test');
-    }
+var roleHealer = {
+	run: function(creep) {
+		var closestDamagedCreep = creep.pos.findClosestByPath(FIND_MY_CREEPS, {
+			filter: (creep) => creep.hits < creep.hitsMax
+		});
+
+		if (closestDamagedCreep) {
+			if (creep.heal(closestDamagedCreep) == ERR_NOT_IN_RANGE) {
+				creep.moveTo(closestDamagedCreep);
+			}
+		} else {
+			// move to middle of room
+			creep.moveTo(24, 24);
+		}
+	}
 };
+
+module.exports = roleHealer;
