@@ -27,7 +27,8 @@ var roleBuilder = {
 					creep.moveTo(nearest);
 				}
 			} else {
-				// TODO commit suicide since there's nothing to build
+				// commit suicide since there's nothing to build
+				creep.suicide();
 			}
 	    }
 	    else {
