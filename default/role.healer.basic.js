@@ -1,9 +1,7 @@
 var utility = require('utility');
 
-var roleHealer = {
+var roleHealerBasic = {
 	run: function(creep) {
-		// TODO Heal fighters first, then heal others
-
 		var closestDamagedCreep = creep.pos.findClosestByPath(FIND_MY_CREEPS, {
 			filter: (creep) => creep.hits < creep.hitsMax
 		});
@@ -13,10 +11,12 @@ var roleHealer = {
 				creep.moveTo(closestDamagedCreep);
 			}
 		} else {
-			// move to middle of room
-			creep.moveTo(24, 24);
+			let healerFlag = Game.flags.HealerFlag;
+			if (healerFlag) {
+				creep.moveTo(healerFlag);
+			}
 		}
 	}
 };
 
-module.exports = roleHealer;
+module.exports = roleHealerBasic;

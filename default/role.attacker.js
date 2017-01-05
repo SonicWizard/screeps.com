@@ -11,8 +11,10 @@ var roleAttacker = {
 				creep.moveTo(nearest);
 			}
 	    } else {
-			// move to middle of room
-			creep.moveTo(24, 24);
+			let fighterFlag = Game.flags.FighterFlag;
+			if (fighterFlag) {
+				creep.moveTo(fighterFlag);
+			}
 		}
 	}
 };
