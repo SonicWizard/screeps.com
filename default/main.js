@@ -8,9 +8,14 @@ var utility = require('utility');
 
 module.exports.loop = function () {
 	let desiredPopulation = {
-		attacker: {
+		fighter: {
 			amount: 4,
 			body: [TOUGH,TOUGH,TOUGH,TOUGH,MOVE,MOVE,ATTACK,ATTACK],
+			script: roleAttacker
+		},
+		bigFighter: {
+			amount: 2,
+			body: [TOUGH,TOUGH,TOUGH,TOUGH,MOVE,MOVE,ATTACK,ATTACK,RANGED_ATTACK,RANGED_ATTACK],
 			script: roleAttacker
 		},
 		harvester: {
@@ -19,7 +24,7 @@ module.exports.loop = function () {
 			script: roleHarvester
 		},
 		bigHarvester: {
-			amount: 0,
+			amount: 1,
 			body: [WORK,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE],
 			script: roleHarvester
 		},
@@ -36,7 +41,7 @@ module.exports.loop = function () {
 		},
 		bigUpgrader: {
 			amount: 1,
-			body: [WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE],
+			body: [WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE],
 			script: roleUpgrader
 		},
 		builder: {
@@ -109,6 +114,8 @@ module.exports.loop = function () {
 	// run the creeps
 	for (var name in Game.creeps) {
 		var creep = Game.creeps[name];
-		desiredPopulation[creep.memory.role].script.run(creep);
+		if (desiredPopulation[creep.memory.role]) {
+			desiredPopulation[creep.memory.role].script.run(creep);
+		}
 	}
 }
