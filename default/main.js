@@ -8,40 +8,25 @@ var utility = require('utility');
 
 module.exports.loop = function () {
 	let desiredPopulation = {
-		fighter: {
-			amount: 4,
-			body: [TOUGH,TOUGH,TOUGH,TOUGH,MOVE,MOVE,ATTACK,ATTACK],
-			script: roleAttacker
-		},
-		bigFighter: {
-			amount: 2,
-			body: [TOUGH,TOUGH,TOUGH,TOUGH,MOVE,MOVE,ATTACK,ATTACK,RANGED_ATTACK,RANGED_ATTACK],
-			script: roleAttacker
-		},
-		harvester: {
-			amount: 5,
-			body: [WORK,CARRY,CARRY,CARRY,MOVE],
-			script: roleHarvester
-		},
-		bigHarvester: {
-			amount: 1,
-			body: [WORK,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE],
-			script: roleHarvester
-		},
 		miner: {
 			// Spawn the same amount of miners as there are containers
 			amount: utility.getNumContainers(Game.spawns.Spawn1.room),
 			body: [WORK,WORK,MOVE],
 			script: roleMiner
 		},
+		harvester: {
+			amount: 5,
+			body: [WORK,CARRY,CARRY,CARRY,MOVE],
+			script: roleHarvester
+		},
+		fighter: {
+			amount: 4,
+			body: [TOUGH,TOUGH,TOUGH,TOUGH,MOVE,MOVE,ATTACK,ATTACK],
+			script: roleAttacker
+		},
 		upgrader: {
 			amount: 5,
 			body: [WORK,WORK,CARRY,MOVE],
-			script: roleUpgrader
-		},
-		bigUpgrader: {
-			amount: 1,
-			body: [WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE],
 			script: roleUpgrader
 		},
 		builder: {
@@ -50,6 +35,21 @@ module.exports.loop = function () {
 			amount: utility.getNumBuildersBasedOnConstruction(Game.spawns.Spawn1.room),
 			body: [WORK,WORK,CARRY,MOVE],
 			script: roleBuilder
+		},
+		bigFighter: {
+			amount: 2,
+			body: [TOUGH,TOUGH,TOUGH,TOUGH,MOVE,MOVE,ATTACK,ATTACK,RANGED_ATTACK,RANGED_ATTACK],
+			script: roleAttacker
+		},
+		bigHarvester: {
+			amount: 1,
+			body: [WORK,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE],
+			script: roleHarvester
+		},
+		bigUpgrader: {
+			amount: 1,
+			body: [WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE],
+			script: roleUpgrader
 		}
 	};
 
