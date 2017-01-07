@@ -22,17 +22,17 @@ module.exports.loop = function () {
 			script: roleHarvester
 		},
 		fighter: {
-			amount: 4,
+			amount: 5,
 			body: [TOUGH,TOUGH,TOUGH,TOUGH,MOVE,MOVE,ATTACK,ATTACK],
 			script: roleAttacker
 		},
 		fighterHealer: {
-			amount: 2,
+			amount: 4,
 			body: [TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,MOVE,MOVE,HEAL],
 			script: roleHealerFighter
 		},
 		basicHealer: {
-			amount: 3,
+			amount: 1,
 			body: [MOVE,HEAL],
 			script: roleHealerBasic
 		},
@@ -45,12 +45,13 @@ module.exports.loop = function () {
 			// Spawn builders only when there are construction sites
 			// Make amount based on the amount of construction needed
 			amount: utility.getNumBuildersBasedOnConstruction(Game.spawns.Spawn1.room),
+			//amount: 7, // TODO set a maxAmount
 			body: [WORK,WORK,CARRY,MOVE],
 			script: roleBuilder
 		},
 		bigFighter: {
 			amount: 2,
-			body: [TOUGH,TOUGH,TOUGH,TOUGH,MOVE,MOVE,ATTACK,ATTACK,RANGED_ATTACK,RANGED_ATTACK],
+			body: [TOUGH,TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,ATTACK,ATTACK,RANGED_ATTACK,RANGED_ATTACK],
 			script: roleAttacker
 		},
 		bigHarvester: {
@@ -59,7 +60,7 @@ module.exports.loop = function () {
 			script: roleHarvester
 		},
 		bigUpgrader: {
-			amount: 4,
+			amount: 2,
 			body: [WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE],
 			script: roleUpgrader
 		}
@@ -108,6 +109,14 @@ module.exports.loop = function () {
         totalDesiredCreeps += desiredPopulation[type].amount;
 	}
 	console.log('Total # of creeps:', totalNumCreeps, 'of', totalDesiredCreeps);
+
+	// auto increment num of creeps
+	/*
+	if (totalNumCreeps == totalDesiredCreeps) {
+		desiredPopulation.fighter.amount += 1;
+		desiredPopulation.fighterHealer.amount += 1;
+	}
+	*/
 
 	// Spawn creeps
 	for (let type in desiredPopulation) {

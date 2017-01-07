@@ -29,6 +29,13 @@ var roleBuilder = {
 			} else {
 				// commit suicide since there's nothing to build
 				creep.suicide();
+
+                /*
+				let builderFlag = Game.flags.BuilderFlag;
+				if (builderFlag) {
+					creep.moveTo(builderFlag);
+				}
+				*/
 			}
 	    }
 	    else {

@@ -34,6 +34,11 @@ var roleHarvester = {
 					return structure.structureType == STRUCTURE_EXTENSION && structure.energy < structure.energyCapacity;
 				}
 			});
+			let storage = Game.spawns.Spawn1.room.find(FIND_MY_STRUCTURES, {
+				filter: (structure) => {
+					return structure.structureType == STRUCTURE_STORAGE && structure.store[RESOURCE_ENERGY] < structure.storeCapacity;
+				}
+			});
 
 			// make harvesters to spawns first, then towers, then extensions
 			if (spawns.length > 0) {
@@ -48,6 +53,11 @@ var roleHarvester = {
 				}
 			} else if (extensions.length > 0) {
 				let nearest = utility.findNearest(creep, extensions);
+				if (creep.transfer(nearest, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+					creep.moveTo(nearest);
+				}
+			} else if (storage.length > 0) {
+				let nearest = utility.findNearest(creep, storage);
 				if (creep.transfer(nearest, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
 					creep.moveTo(nearest);
 				}
