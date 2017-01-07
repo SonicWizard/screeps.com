@@ -23,7 +23,11 @@ var roleUpgrader = {
 				creep.moveTo(creep.room.controller);
 			}
 		} else {
+		    // TODO Withdraw from storage first
+		    // then containers
+		    // then harvest
 			if (this.collecting) {
+			    // TODO Withdraw from storage first
 				utility.withdrawFromFullestContainer(creep);
 			} else {
 				utility.harvestFromClosestSource(creep);
