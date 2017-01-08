@@ -40,7 +40,7 @@ var roleHarvester = {
 				}
 			});
 
-			// make harvesters to spawns first, then towers, then extensions
+			// make harvesters go to spawns first, then towers, then extensions
 			if (spawns.length > 0) {
 				let nearest = utility.findNearest(creep, spawns);
 				if (creep.transfer(nearest, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {

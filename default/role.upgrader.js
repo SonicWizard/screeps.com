@@ -23,12 +23,22 @@ var roleUpgrader = {
 				creep.moveTo(creep.room.controller);
 			}
 		} else {
-		    // TODO Withdraw from storage first
-		    // then containers
-		    // then harvest
 			if (this.collecting) {
-			    // TODO Withdraw from storage first
-				utility.withdrawFromFullestContainer(creep);
+			    // Withdraw from storage first
+				let storages = Game.spawns.Spawn1.room.find(FIND_MY_STRUCTURES, {
+					filter: (structure) => {
+						return structure.structureType == STRUCTURE_STORAGE && structure.store[RESOURCE_ENERGY] < structure.storeCapacity;
+					}
+				});
+				if (storages.length > 0) {
+					let nearest = utility.findNearest(creep, storages);
+					if (creep.withdraw(nearest, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+						creep.moveTo(nearest);
+					}
+				} else {
+					// then withdraw from containers
+					utility.withdrawFromFullestContainer(creep);
+				}
 			} else {
 				utility.harvestFromClosestSource(creep);
 			}

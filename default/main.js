@@ -27,12 +27,12 @@ module.exports.loop = function () {
 			script: roleAttacker
 		},
 		fighterHealer: {
-			amount: 4,
+			amount: 3,
 			body: [TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,MOVE,MOVE,HEAL],
 			script: roleHealerFighter
 		},
 		basicHealer: {
-			amount: 1,
+			amount: 0,
 			body: [MOVE,HEAL],
 			script: roleHealerBasic
 		},
@@ -60,7 +60,7 @@ module.exports.loop = function () {
 			script: roleHarvester
 		},
 		bigUpgrader: {
-			amount: 2,
+			amount: 1,
 			body: [WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE],
 			script: roleUpgrader
 		}
