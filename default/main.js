@@ -13,7 +13,7 @@ module.exports.loop = function () {
 		miner: {
 			// Spawn the same amount of miners as there are containers
 			amount: utility.getNumContainers(Game.spawns.Spawn1.room),
-			body: [WORK,WORK,MOVE],
+			body: [WORK,WORK,WORK,MOVE],
 			script: roleMiner
 		},
 		harvester: {
@@ -55,7 +55,7 @@ module.exports.loop = function () {
 			script: roleAttacker
 		},
 		bigHarvester: {
-			amount: 1,
+			amount: 0,
 			body: [WORK,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE],
 			script: roleHarvester
 		},

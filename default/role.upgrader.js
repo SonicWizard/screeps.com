@@ -27,7 +27,7 @@ var roleUpgrader = {
 			    // Withdraw from storage first
 				let storages = Game.spawns.Spawn1.room.find(FIND_MY_STRUCTURES, {
 					filter: (structure) => {
-						return structure.structureType == STRUCTURE_STORAGE && structure.store[RESOURCE_ENERGY] < structure.storeCapacity;
+						return structure.structureType == STRUCTURE_STORAGE && structure.store[RESOURCE_ENERGY] > 0;
 					}
 				});
 				if (storages.length > 0) {

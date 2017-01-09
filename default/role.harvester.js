@@ -19,14 +19,14 @@ var roleHarvester = {
 		}
 
 		if (creep.memory.delivering) {
-			let towers = creep.room.find(FIND_STRUCTURES, {
-				filter: (structure) => {
-					return structure.structureType == STRUCTURE_TOWER && structure.energy < structure.energyCapacity;
-				}
-			});
 			let spawns = creep.room.find(FIND_STRUCTURES, {
 				filter: (structure) => {
 					return structure.structureType == STRUCTURE_SPAWN && structure.energy < structure.energyCapacity;
+				}
+			});
+			let towers = creep.room.find(FIND_STRUCTURES, {
+				filter: (structure) => {
+					return structure.structureType == STRUCTURE_TOWER && structure.energy < structure.energyCapacity;
 				}
 			});
 			let extensions = creep.room.find(FIND_STRUCTURES, {
