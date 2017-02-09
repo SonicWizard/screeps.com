@@ -1,12 +1,12 @@
 var utility = require('utility');
 
 var roleBuilder = {
-	collecting: true,
+	collecting: false, // true will collect from containers, false will harvest from sources
     /** @param {Creep} creep **/
     run: function(creep) {
 
 		// set status
-	    if(creep.memory.building && creep.carry.energy == 0) {
+	    if (creep.memory.building && creep.carry.energy == 0) {
             creep.memory.building = false;
 			if (this.collecting) {
 				creep.say('collecting');
@@ -14,7 +14,7 @@ var roleBuilder = {
 				creep.say('harvesting');
 			}
 	    }
-	    if(!creep.memory.building && creep.carry.energy == creep.carryCapacity) {
+	    if (!creep.memory.building && creep.carry.energy == creep.carryCapacity) {
 	        creep.memory.building = true;
 	        creep.say('building');
 	    }
@@ -28,23 +28,27 @@ var roleBuilder = {
 				}
 			} else {
 				// commit suicide since there's nothing to build
-				creep.suicide();
+				//creep.suicide();
+				//this.die(creep);
 
-                /*
 				let builderFlag = Game.flags.BuilderFlag;
-				if (builderFlag) {
-					creep.moveTo(builderFlag);
-				}
-				*/
+				this.moveToFlag(creep, builderFlag);
 			}
-	    }
-	    else {
+	    } else {
 			if (this.collecting) {
 				utility.withdrawFromFullestContainer(creep);
 			} else {
 				utility.harvestFromClosestSource(creep);
 			}
 	    }
+	},
+	die: function(creep) {
+		creep.suicide();
+	},
+	moveToFlag: function(creep, flag) {
+		if (flag) {
+			creep.moveTo(flag);
+		}
 	}
 };
 

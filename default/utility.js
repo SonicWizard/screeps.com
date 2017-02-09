@@ -74,6 +74,7 @@ var utility = {
 		});
 		return containers.length;
 	},
+	/*
 	getNumBuildersBasedOnConstruction: (room) => {
 		let constructionSites = room.find(FIND_CONSTRUCTION_SITES);
 		let progressTotal = 0;
@@ -89,6 +90,30 @@ var utility = {
 		console.log('construction need is', progressTotal, 'and remaining progress is', remainingProgress, 'so number of builders will be', numBuilders);
 
 		return numBuilders;
+	}
+	*/
+	getNumBuildersBasedOnConstruction: (rooms) => {
+		let totalNumBuilders = 0;
+		for (let roomName in rooms) {
+			let room = Game.rooms[roomName];
+			//console.log('room info', roomName, room);
+			let constructionSites = room.find(FIND_CONSTRUCTION_SITES);
+			let progressTotal = 0;
+			let progress = 0;
+			constructionSites.forEach((site) => {
+				progressTotal += site.progressTotal;
+				progress += site.progress;
+			});
+
+			let remainingProgress = progressTotal - progress;
+			let numBuilders = Math.ceil(remainingProgress / 1000);
+			totalNumBuilders += numBuilders;
+			console.log('construction need is', progressTotal, 'in room', roomName, 'and remaining progress is', remainingProgress, 'so number of builders will be', numBuilders, 'and total numBuilders is', totalNumBuilders);
+
+		}
+
+		return totalNumBuilders;
+
 	}
 };
 

@@ -50,7 +50,7 @@ module.exports.loop = function () {
 		builder: {
 			// Spawn builders only when there are construction sites
 			// Make amount based on the amount of construction needed
-			amount: utility.getNumBuildersBasedOnConstruction(Game.spawns.Spawn1.room),
+			amount: utility.getNumBuildersBasedOnConstruction(Game.rooms),
 			//amount: 7, // TODO set a maxAmount
 			body: [WORK,WORK,CARRY,MOVE],
 			script: roleBuilder
