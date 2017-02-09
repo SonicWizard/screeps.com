@@ -5,15 +5,21 @@ var roleHarvester = require('role.harvester');
 var roleMiner = require('role.miner');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
+var roleClaimer = require('role.claimer');
 var structureTower = require('structure.tower');
 var utility = require('utility');
 
 module.exports.loop = function () {
 	let desiredPopulation = {
+		claimer: {
+			amount: 1,
+			body: [MOVE,MOVE,CLAIM,CLAIM],
+			script: roleClaimer
+		},
 		miner: {
 			// Spawn the same amount of miners as there are containers
 			amount: utility.getNumContainers(Game.spawns.Spawn1.room),
-			body: [WORK,WORK,WORK,MOVE],
+			body: [WORK,WORK,MOVE],
 			script: roleMiner
 		},
 		harvester: {
@@ -50,7 +56,7 @@ module.exports.loop = function () {
 			script: roleBuilder
 		},
 		bigFighter: {
-			amount: 2,
+			amount: 1,
 			body: [TOUGH,TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,ATTACK,ATTACK,RANGED_ATTACK,RANGED_ATTACK],
 			script: roleAttacker
 		},

@@ -1,12 +1,19 @@
-/*
- * Module code goes here. Use 'module.exports' to export things:
- * module.exports.thing = 'a thing';
- *
- * You can import it from another modules like this:
- * var mod = require('role.claimer');
- * mod.thing == 'a thing'; // true
- */
+var utility = require('utility');
 
-module.exports = {
+var roleClaimer = {
+	run: function(creep) {
+		let claimerFlag = Game.flags.ClaimerFlag;
+		if (claimerFlag) {
+			creep.moveTo(claimerFlag);
+		}
 
+		/*
+		let controller = Game.rooms['E73S8'].controller;
+		if (creep.claimController(controller) == ERR_NOT_IN_RANGE) {
+			creep.moveTo(controller);
+		}
+		*/
+	}
 };
+
+module.exports = roleClaimer;
