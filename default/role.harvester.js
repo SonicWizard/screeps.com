@@ -4,6 +4,8 @@ var roleHarvester = {
 	collecting: true,
     /** @param {Creep} creep **/
     run: function(creep) {
+		this.collecting = utility.areContainersInRoom(creep);
+
 		// set status
 		if (creep.memory.delivering && creep.carry.energy == 0) {
 			creep.memory.delivering = false;

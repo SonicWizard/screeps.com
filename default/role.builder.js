@@ -1,9 +1,11 @@
 var utility = require('utility');
 
 var roleBuilder = {
-	collecting: false, // true will collect from containers, false will harvest from sources
+	collecting: true, // true will collect from containers, false will harvest from sources
     /** @param {Creep} creep **/
     run: function(creep) {
+
+		this.collecting = utility.areContainersInRoom(creep);
 
 		// set status
 	    if (creep.memory.building && creep.carry.energy == 0) {

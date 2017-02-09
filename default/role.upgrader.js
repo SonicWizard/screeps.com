@@ -4,6 +4,7 @@ var roleUpgrader = {
 	collecting: true,
     /** @param {Creep} creep **/
     run: function(creep) {
+		this.collecting = utility.areContainersInRoom(creep);
 
 	    if (creep.memory.upgrading && creep.carry.energy == 0) {
             creep.memory.upgrading = false;
@@ -19,7 +20,7 @@ var roleUpgrader = {
 	    }
 
 		if (creep.memory.upgrading) {
-			if(creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
+			if (creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
 				creep.moveTo(creep.room.controller);
 			}
 		} else {

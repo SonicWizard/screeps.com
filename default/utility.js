@@ -74,7 +74,6 @@ var utility = {
 		});
 		return containers.length;
 	},
-	/*
 	getNumBuildersBasedOnConstruction: (room) => {
 		let constructionSites = room.find(FIND_CONSTRUCTION_SITES);
 		let progressTotal = 0;
@@ -90,8 +89,17 @@ var utility = {
 		console.log('construction need is', progressTotal, 'and remaining progress is', remainingProgress, 'so number of builders will be', numBuilders);
 
 		return numBuilders;
+	},
+	areContainersInRoom: function(creep) {
+		var containers = creep.room.find(FIND_STRUCTURES, {
+			filter: (structure) => structure.structureType == STRUCTURE_CONTAINER
+		});
+		if (containers.length > 0) {
+			return true;
+		}
+		return false;
 	}
-	*/
+	/*
 	getNumBuildersBasedOnConstruction: (rooms) => {
 		let totalNumBuilders = 0;
 		for (let roomName in rooms) {
@@ -115,6 +123,7 @@ var utility = {
 		return totalNumBuilders;
 
 	}
+	*/
 };
 
 module.exports = utility;
