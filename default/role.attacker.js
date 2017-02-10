@@ -11,7 +11,7 @@ var roleAttacker = {
 				creep.moveTo(nearest);
 			}
 	    } else {
-			let fighterFlag = Game.flags.FighterFlag;
+			let fighterFlag = creep.pos.findClosestByPath(Game.flags, { filter: (flag) => flag.name.indexOf('Fighter') != -1 });
 			if (fighterFlag) {
 				creep.moveTo(fighterFlag);
 			}

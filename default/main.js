@@ -48,7 +48,7 @@ module.exports.loop = function () {
 				script: roleUpgrader
 			},
 			builder: {
-				amount: 0,
+				amount: 2,
 				body: [WORK,WORK,CARRY,MOVE],
 				script: roleBuilder
 			},
@@ -69,32 +69,42 @@ module.exports.loop = function () {
 			}
 		},
 		"Spawn2": {
-			builder: {
-				amount: 2,
-				body: [WORK,WORK,CARRY,MOVE],
-				script: roleBuilder
-			},
 			harvester: {
 				amount: 2,
 				body: [WORK,CARRY,CARRY,CARRY,MOVE],
 				script: roleHarvester
 			},
+			upgrader: {
+				amount: 5,
+				body: [WORK,WORK,CARRY,MOVE],
+				script: roleUpgrader
+			},
+			builder: {
+				amount: 2,
+				body: [WORK,WORK,CARRY,MOVE],
+				script: roleBuilder
+			},
 			miner: {
-				amount: 1,
+				amount: 0,
 				body: [WORK,WORK,MOVE],
 				script: roleMiner
 			},
-			upgrader: {
-				amount: 4,
-				body: [WORK,WORK,CARRY,MOVE],
-				script: roleUpgrader
+			fighter: {
+				amount: 3,
+				body: [TOUGH,TOUGH,TOUGH,TOUGH,MOVE,MOVE,ATTACK,ATTACK],
+				script: roleAttacker
+			},
+			fighterHealer: {
+				amount: 2,
+				body: [MOVE,HEAL],
+				script: roleHealerFighter
 			}
 		}
 	};
 
 	// clear creeps
-	for(var name in Memory.creeps) {
-		if(!Game.creeps[name]) {
+	for (var name in Memory.creeps) {
+		if (!Game.creeps[name]) {
 			delete Memory.creeps[name];
 			console.log('Clearing non-existing creep memory:', name);
 		}

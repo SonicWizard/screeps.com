@@ -37,10 +37,19 @@ var roleBuilder = {
 				this.moveToFlag(creep, builderFlag);
 			}
 	    } else {
-			if (this.collecting) {
-				utility.withdrawFromFullestContainer(creep);
+			// collecting
+			// find dropped energy first
+			let source = utility.findClosestDroppedEnergy(creep);
+			if (source) {
+				if (creep.pickup(source) == ERR_NOT_IN_RANGE) {
+					creep.moveTo(source);
+				}
 			} else {
-				utility.harvestFromClosestSource(creep);
+				if (this.collecting) {
+					utility.withdrawFromFullestContainer(creep);
+				} else {
+					utility.harvestFromClosestSource(creep);
+				}
 			}
 	    }
 	},
