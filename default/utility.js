@@ -92,7 +92,9 @@ var utility = {
 	},
 	areContainersInRoom: function(creep) {
 		var containers = creep.room.find(FIND_STRUCTURES, {
-			filter: (structure) => structure.structureType == STRUCTURE_CONTAINER
+			filter: (structure) => {
+				return (structure.structureType == STRUCTURE_CONTAINER) && (structure.store[RESOURCE_ENERGY] > 0);
+			}
 		});
 		if (containers.length > 0) {
 			return true;

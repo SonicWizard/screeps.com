@@ -30,11 +30,12 @@ var roleBuilder = {
 				}
 			} else {
 				// commit suicide since there's nothing to build
-				//creep.suicide();
-				//this.die(creep);
+				creep.suicide();
 
+				/*
 				let builderFlag = Game.flags.BuilderFlag;
 				this.moveToFlag(creep, builderFlag);
+				*/
 			}
 	    } else {
 			// collecting
@@ -52,9 +53,6 @@ var roleBuilder = {
 				}
 			}
 	    }
-	},
-	die: function(creep) {
-		creep.suicide();
 	},
 	moveToFlag: function(creep, flag) {
 		if (flag) {

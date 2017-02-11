@@ -18,7 +18,6 @@ module.exports.loop = function () {
 				script: roleClaimer
 			},
 			miner: {
-				amount: 5,
 				body: [WORK,WORK,MOVE],
 				script: roleMiner
 			},
@@ -48,7 +47,7 @@ module.exports.loop = function () {
 				script: roleUpgrader
 			},
 			builder: {
-				amount: 2,
+				amount: 3,
 				body: [WORK,WORK,CARRY,MOVE],
 				script: roleBuilder
 			},
@@ -70,24 +69,14 @@ module.exports.loop = function () {
 		},
 		"Spawn2": {
 			harvester: {
-				amount: 2,
+				amount: 5,
 				body: [WORK,CARRY,CARRY,CARRY,MOVE],
 				script: roleHarvester
 			},
 			upgrader: {
-				amount: 5,
-				body: [WORK,WORK,CARRY,MOVE],
-				script: roleUpgrader
-			},
-			builder: {
 				amount: 2,
 				body: [WORK,WORK,CARRY,MOVE],
-				script: roleBuilder
-			},
-			miner: {
-				amount: 0,
-				body: [WORK,WORK,MOVE],
-				script: roleMiner
+				script: roleUpgrader
 			},
 			fighter: {
 				amount: 3,
@@ -95,9 +84,18 @@ module.exports.loop = function () {
 				script: roleAttacker
 			},
 			fighterHealer: {
-				amount: 2,
+				amount: 1,
 				body: [MOVE,HEAL],
 				script: roleHealerFighter
+			},
+			builder: {
+				amount: 2,
+				body: [WORK,WORK,CARRY,MOVE],
+				script: roleBuilder
+			},
+			miner: {
+				body: [WORK,WORK,MOVE],
+				script: roleMiner
 			}
 		}
 	};
@@ -138,6 +136,9 @@ module.exports.loop = function () {
 		let totalNumCreeps = 0;
 		let totalDesiredCreeps = 0;
 		for (let type in desiredPopulations[spawn]) {
+			if (type === 'miner') {
+				desiredPopulations[spawn][type].amount = utility.getNumContainers(spawnObj.room);
+			}
 			console.log(type + 's: ' + myCreeps[type].length + ' of ' + desiredPopulations[spawn][type].amount);
 			totalNumCreeps += myCreeps[type].length;
 			totalDesiredCreeps += desiredPopulations[spawn][type].amount;
